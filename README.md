@@ -1,1 +1,2 @@
 # MyNewsWebsite
+Create Java Project
