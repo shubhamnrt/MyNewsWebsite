@@ -36,9 +36,9 @@ public class ArticleController {
 		return service.getArticleById(id);
 	}
 	
-	@GetMapping("/articlename/{name}")
-	public Article findArticleByName(@PathVariable String name){
-		return service.getArticleByName(name);
+	@GetMapping("/articletitle/{title}")
+	public Article findArticleByTitle(@PathVariable String title){
+		return service.getArticleByTitle(title);
 	}
 	
 	@DeleteMapping("/delete/{id}")

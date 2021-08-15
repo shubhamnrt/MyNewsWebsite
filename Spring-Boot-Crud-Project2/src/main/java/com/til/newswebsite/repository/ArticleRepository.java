@@ -9,6 +9,6 @@ import com.til.newswebsite.entity.Article;
 
 public interface ArticleRepository extends JpaRepository<Article,Integer> {
 	
-	Article findByName(String Name);
+	Article findByTitle(String Title);
 
 }

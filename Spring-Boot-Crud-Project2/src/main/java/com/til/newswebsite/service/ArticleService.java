@@ -31,8 +31,8 @@ public class ArticleService {
 	}
 	
 
-	public Article getArticleByName(String name){
-		return repository.findByName(name);
+	public Article getArticleByTitle(String title){
+		return repository.findByTitle(title);
 	}
 	
 	

@@ -1,7 +1,12 @@
 package com.til.newswebsite.entity;
 
 import lombok.*;
+
+import java.util.Date;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @AllArgsConstructor
@@ -11,46 +16,114 @@ import javax.persistence.*;
 public class Article {
 	
 	@Id
-	@GeneratedValue
-	private int id;
-	private String name;
-	private int quantity;
-	private double price;
-	public int getId() {
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+	
+	@Column(unique=true,nullable=false)
+	private String title;
+	
+	@CreationTimestamp
+	private Date createdAt;
+	
+	@CreationTimestamp
+	private Date updatedAt;
+	
+	private String description;
+	
+	private String content;
+	
+	private String image;
+	
+	private boolean priority;
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public int getQuantity() {
-		return quantity;
+
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
-	public double getPrice() {
-		return price;
+
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	public Article(int id, String name, int quantity, double price) {
-		//super();
-		this.id = id;
-		this.name = name;
-		this.quantity = quantity;
-		this.price = price;
+
+	public String getDescription() {
+		return description;
 	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public boolean isPriority() {
+		return priority;
+	}
+
+	public void setPriority(boolean priority) {
+		this.priority = priority;
+	}
+
 	public Article() {
-		//super();
-		// TODO Auto-generated constructor stub
+		super();
 	}
+
+	public Article(Integer id, String title, Date createdAt, Date updatedAt, String description, String content,
+			String image, boolean priority) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.description = description;
+		this.content = content;
+		this.image = image;
+		this.priority = priority;
+	}
+
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", title=" + title + ", createdAt=" + createdAt + ", modifiedAt=" + updatedAt
+				+ ", description=" + description + ", content=" + content + ", image=" + image + ", priority="
+				+ priority + "]";
+	}
+	
 	
 
 }
