@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name="CATEGORY_TBL")
 public class Category {
@@ -16,8 +18,10 @@ public class Category {
 	
 	private String description;
 	
+	@CreationTimestamp
 	private Date createdAt;
 	
+	@CreationTimestamp
 	private Date modifiedAt;
 
 	public Integer getId() {
