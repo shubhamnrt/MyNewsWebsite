@@ -8,25 +8,27 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table
-public class Category {
-
+public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer authorId;
 
-    @Column(unique = true, nullable = false)
-    private String categoryName;
+    private String email;
 
-    private String description;
+    private String userName;
+
+    private String fullName;
+
+    private String password;
 
     @CreationTimestamp
     private Date createdAt;
@@ -34,12 +36,12 @@ public class Category {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany( mappedBy = "category")
+    @OneToMany(mappedBy = "author")
     private List<Article> articleList = new ArrayList<Article>(0);
 
     public void addArticle(Article article){
         articleList.add(article);
-        article.setCategory(this);
+        article.setAuthor(this);
     }
 
 }

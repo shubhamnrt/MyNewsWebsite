@@ -1,6 +1,5 @@
 package com.til.newswebsite.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,27 +7,26 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table
-public class Article {
+public class PriorityList {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer articleId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer PriorityListId;
 
-    @Column(unique=true,nullable=false)
-    private String title;
+    private String description;
 
-    private String imageUrl;
+    private String name;
 
     @CreationTimestamp
     private Date createdAt;
@@ -36,21 +34,7 @@ public class Article {
     @UpdateTimestamp
     private Date updatedAt;
 
-    private String description;
-
-    private String content;
-
-    @ManyToOne
-    @JoinColumn
-    private Author author;
-
-    //private String categoryName;
-    @ManyToOne
-    @JoinColumn
-    private Category category;
-
     @ManyToMany
     @JoinColumn
     private List<PriorityArticles> priorityArticlesList = new ArrayList<>();
-
 }

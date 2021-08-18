@@ -1,5 +1,6 @@
 package com.til.newswebsite.controller;
 
+import com.til.newswebsite.dto.ArticleDto;
 import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,39 +11,41 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/article")
 public class ArticleController {
 
     @Autowired
-    private ArticleService service;
+    private ArticleService articleService;
 
-    @PostMapping("/addArticle")
-    public Article addArticle(@RequestBody Article article) {
-        return service.saveArticle(article);
+    @PostMapping("/createArticle")
+    public Article createArticle(@RequestBody ArticleDto articleDto) {
+
+        return articleService.createArticle(articleDto);
     }
 
-    @PostMapping("/addArticles")
-    public List<Article> addArticle(@RequestBody List<Article> articles){
-        return service.saveArticles(articles);
-    }
+//    @PostMapping("/addArticles")
+//    public List<Article> addArticle(@RequestBody List<ArticleDto> articlesDto){
+//        return articleService.createArticles(articlesDto);
+//    }
 
-    @GetMapping("/articles")
+    @GetMapping("/allArticles")
     public List<Article> findAllArticles(){
-        return service.getArticles();
+        return articleService.getArticles();
     }
 
-    @GetMapping("/article/{id}")
+    @GetMapping("/{id}")
     public Article findArticleById(@PathVariable int id){
-        return service.getArticleById(id);
+        return articleService.getArticleById(id);
     }
 
-    @GetMapping("/articletitle/{title}")
+    @GetMapping("/articleTitle/{title}")
     public Article findArticleByTitle(@PathVariable String title){
-        return service.getArticleByTitle(title);
+        return articleService.getArticleByTitle(title);
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteArticle(@PathVariable int id) {
-        return service.deleteArticle(id);
+        return articleService.deleteArticle(id);
     }
 
 }
