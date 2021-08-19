@@ -2,14 +2,12 @@ package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.ArticleDto;
 import com.til.newswebsite.entity.Article;
-import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.AuthorRepository;
 import com.til.newswebsite.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
