@@ -1,6 +1,7 @@
 package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.ArticleDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListDto;
 import com.til.newswebsite.dto.articleupdate.ContentDto;
 import com.til.newswebsite.dto.articleupdate.DescriptionDto;
 import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
@@ -12,6 +13,7 @@ import com.til.newswebsite.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,8 +61,22 @@ public class ArticleService {
 //        return articleRepository.saveAll(articles);
 //    }
 
-    public List<Article> getArticles(){
-        return articleRepository.findAll();
+    public List<ArticleListDto> getArticles(){
+        List<ArticleListDto> articleListDtoList = new ArrayList<>();
+         articleRepository.findAll().forEach(article -> {
+             ArticleListDto articleListDto = new ArticleListDto();
+
+             articleListDto.setTitle(article.getTitle());
+             articleListDto.setDescription(article.getDescription());
+             articleListDto.setCategoryName(article.getCategory().getCategoryName());
+             articleListDto.setAuthorName(article.getAuthor().getFullName());
+             articleListDto.setImageUrl(article.getImageUrl());
+             articleListDto.setCreatedAt(article.getCreatedAt());
+
+             articleListDtoList.add(articleListDto);
+         });
+
+         return articleListDtoList;
     }
 
     public Article getArticleById(int id){

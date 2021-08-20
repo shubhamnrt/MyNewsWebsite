@@ -40,11 +40,15 @@ public class PriorityListService {
     public PriorityArticles addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
         PriorityArticles priorityArticles = new PriorityArticles();
 
+        Integer id = Integer.valueOf(String.valueOf(priorityArticlesDto.getPriorityListId())
+                + String.valueOf(priorityArticlesDto.getArticleId()));
+        priorityArticles.setPriorityArticlesId(id);
         priorityArticles.setPriorityList(priorityListRepository.getById(priorityArticlesDto.getPriorityListId()));
         priorityArticles.setArticle(articleRepository.getById(priorityArticlesDto.getArticleId()));
 
         priorityListRepository.getById(priorityArticlesDto.getPriorityListId()).addPriorityArticles(priorityArticles);
         articleRepository.getById(priorityArticlesDto.getArticleId()).addPriorityArticles(priorityArticles);
+
         return priorityArticles;
     }
 
