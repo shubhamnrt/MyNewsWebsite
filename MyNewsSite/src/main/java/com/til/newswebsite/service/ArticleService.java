@@ -75,6 +75,7 @@ public class ArticleService {
         articleRepository.deleteById(id);
         return "Article removed !! " + id;
     }
+
     public String updateArticleDescription(DescriptionDto descriptionDto){
         Article article = articleRepository.getById(descriptionDto.getArticleId());
         article.setDescription(descriptionDto.getDescription());
@@ -102,5 +103,6 @@ public class ArticleService {
         articleRepository.save(article);
         return "Updated ImageUrl";
     }
+
 }
 

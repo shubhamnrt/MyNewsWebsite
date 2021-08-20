@@ -67,6 +67,7 @@ public class ArticleController {
         return articleService.updateArticleContent(contentDto);
     }
 
+    @PutMapping("/updateImageUrl")
     public String updateArticleImageUrl(ImageUrlDto imageUrlDto){
         return articleService.updateArticleImageURl(imageUrlDto);
     }

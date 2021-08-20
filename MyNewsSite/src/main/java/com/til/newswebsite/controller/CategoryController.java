@@ -1,6 +1,7 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.CategoryDto;
+import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,8 @@ public class CategoryController {
         return categoryService.getCategoryById(id);
     }
 
+    @GetMapping("/allArticles/{categoryId}")
+    public List<Article> getAllArticlesFromCategory(@PathVariable Integer id){
+        return categoryService.getAllArticlesFromCategory(id);
+    }
 }

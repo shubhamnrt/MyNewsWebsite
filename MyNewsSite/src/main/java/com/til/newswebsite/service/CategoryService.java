@@ -17,6 +17,9 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ArticleRepository articleRepository;
+
 
     public Category addCategory(CategoryDto categoryDto){
         Category category = new Category();
@@ -37,5 +40,8 @@ public class CategoryService {
         return categoryRepository.findById(id).orElse(null);
     }
 
+    public List<Article> getAllArticlesFromCategory(Integer categoryId){
+        return articleRepository.findAllByCategory(categoryRepository.getById(categoryId));
+    }
 
 }

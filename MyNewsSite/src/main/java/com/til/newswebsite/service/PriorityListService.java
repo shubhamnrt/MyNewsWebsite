@@ -53,6 +53,8 @@ public class PriorityListService {
     }
 
     public List<Article> getAllArticles(Integer id){
+
+        // title, description, imageUrl, CategoryId, AuthorId, PriorityArticleId
         List<Article> articleList = new ArrayList<>();
 
         priorityListRepository.getById(id).getPriorityArticlesList().
