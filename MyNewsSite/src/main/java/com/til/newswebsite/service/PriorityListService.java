@@ -2,6 +2,7 @@ package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
+import com.til.newswebsite.dto.ArticleListResponseDto;
 import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.entity.PriorityArticles;
 import com.til.newswebsite.entity.PriorityList;
@@ -11,7 +12,6 @@ import com.til.newswebsite.repository.PriorityListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,14 +56,29 @@ public class PriorityListService {
         return priorityListRepository.findAll();
     }
 
-    public List<Article> getAllArticles(Integer id){
+    public List<ArticleListResponseDto> getAllArticles(Integer priorityListId){
 
         // title, description, imageUrl, CategoryId, AuthorId, PriorityArticleId
-        List<Article> articleList = new ArrayList<>();
+        List<ArticleListResponseDto> articleListDtoListResponse = new ArrayList<>();
 
-        priorityListRepository.getById(id).getPriorityArticlesList().
-                forEach(priorityArticles -> articleList.add(priorityArticles.getArticle()));
-        return articleList;
+        priorityArticlesRepository.findAllByPriorityList(priorityListRepository.getById(priorityListId)).
+                forEach(priorityArticles -> {
+                    ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
+                    Article article = articleRepository.getById(priorityArticles.getArticle().getArticleId());
+                    articleListResponseDto.setTitle(article.getTitle());
+                    articleListResponseDto.setDescription(article.getDescription());
+                    articleListResponseDto.setAuthorName(article.getAuthor().getFullName());
+                    articleListResponseDto.setImageUrl(article.getImageUrl());
+                    articleListResponseDto.setCreatedAt(article.getCreatedAt());
+                    articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
+
+                    articleListDtoListResponse.add(articleListResponseDto);
+                });
+
+//
+//        priorityListRepository.getById(id).getPriorityArticlesList().
+//                forEach(priorityArticles -> articleList.add(priorityArticles.getArticle()));
+        return articleListDtoListResponse;
     }
 
     public String deleteArticleFromPriorityList(Integer PLid, Integer Aid){

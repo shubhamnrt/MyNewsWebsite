@@ -2,8 +2,7 @@ package com.til.newswebsite.service;
 
 
 import com.til.newswebsite.dto.CategoryDto;
-import com.til.newswebsite.dto.articleresponse.ArticleListDto;
-import com.til.newswebsite.entity.Article;
+import com.til.newswebsite.dto.ArticleListResponseDto;
 import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.CategoryRepository;
@@ -42,23 +41,23 @@ public class CategoryService {
         return categoryRepository.findById(id).orElse(null);
     }
 
-    public List<ArticleListDto> getAllArticlesFromCategory(Integer categoryId){
-        List<ArticleListDto> articleListDtoList = new ArrayList<>();
+    public List<ArticleListResponseDto> getAllArticlesFromCategory(Integer categoryId){
+        List<ArticleListResponseDto> articleListDtoListResponse = new ArrayList<>();
 
         articleRepository.findAllByCategory(categoryRepository.getById(categoryId)).forEach(article -> {
-            ArticleListDto articleListDto = new ArticleListDto();
+            ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
 
-            articleListDto.setTitle(article.getTitle());
-            articleListDto.setDescription(article.getDescription());
-            articleListDto.setImageUrl(article.getImageUrl());
-            articleListDto.setCreatedAt(article.getCreatedAt());
-            articleListDto.setCategoryName(article.getCategory().getCategoryName());
-            articleListDto.setAuthorName(article.getAuthor().getFullName());
+            articleListResponseDto.setTitle(article.getTitle());
+            articleListResponseDto.setDescription(article.getDescription());
+            articleListResponseDto.setImageUrl(article.getImageUrl());
+            articleListResponseDto.setCreatedAt(article.getCreatedAt());
+            articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
+            articleListResponseDto.setAuthorName(article.getAuthor().getFullName());
 
-            articleListDtoList.add(articleListDto);
+            articleListDtoListResponse.add(articleListResponseDto);
         });
 
-        return articleListDtoList;
+        return articleListDtoListResponse;
     }
 
 }

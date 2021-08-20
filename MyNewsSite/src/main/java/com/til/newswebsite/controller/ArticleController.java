@@ -1,7 +1,7 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.ArticleDto;
-import com.til.newswebsite.dto.articleresponse.ArticleListDto;
+import com.til.newswebsite.dto.ArticleListResponseDto;
 import com.til.newswebsite.dto.articleupdate.ContentDto;
 import com.til.newswebsite.dto.articleupdate.DescriptionDto;
 import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
@@ -34,7 +34,7 @@ public class ArticleController {
 //    }
 
     @GetMapping("/allArticles")
-    public List<ArticleListDto> findAllArticles(){
+    public List<ArticleListResponseDto> findAllArticles(){
         return articleService.getArticles();
     }
 

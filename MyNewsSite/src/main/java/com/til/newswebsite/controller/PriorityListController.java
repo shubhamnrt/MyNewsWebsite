@@ -2,7 +2,7 @@ package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
-import com.til.newswebsite.entity.Article;
+import com.til.newswebsite.dto.ArticleListResponseDto;
 import com.til.newswebsite.entity.PriorityArticles;
 import com.til.newswebsite.entity.PriorityList;
 import com.til.newswebsite.service.PriorityListService;
@@ -34,8 +34,8 @@ public class PriorityListController {
     }
 
     @GetMapping("/{id}/allArticles")
-    public List<Article> getAllArticles(@PathVariable Integer id){
-        return priorityListService.getAllArticles(id);
+    public List<ArticleListResponseDto> getAllArticles(@PathVariable Integer priorityListId){
+        return priorityListService.getAllArticles(priorityListId);
     }
 
     @DeleteMapping("/delete/{PLid}/{Aid}")
