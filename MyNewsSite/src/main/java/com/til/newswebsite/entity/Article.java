@@ -49,8 +49,11 @@ public class Article {
     @JoinColumn
     private Category category;
 
-    @ManyToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "article")
     private List<PriorityArticles> priorityArticlesList = new ArrayList<>();
 
+   public void addPriorityArticles(PriorityArticles priorityArticles){
+       priorityArticlesList.add(priorityArticles);
+       priorityArticles.setArticle(this);
+   }
 }

@@ -27,11 +27,13 @@ public class ArticleService {
         Article article = new Article();
 
         article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
+
         article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
         article.setContent(articleDto.getContent());
         article.setDescription(articleDto.getDescription());
         article.setImageUrl(articleDto.getImageUrl());
         article.setTitle(articleDto.getTitle());
+        categoryRepository.getById(articleDto.getCategoryId()).addArticle(article);
         return articleRepository.save(article);
     }
 //

@@ -28,24 +28,13 @@ public class PriorityArticles {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn
-    private List<Article> articleList = new ArrayList<>();
+    private Article article;
 
-    public void addArticle(Article article){
-        articleList.add(article);
-        article.getPriorityArticlesList().add(this);
-    }
-
-    @ManyToMany
-    private List<PriorityList> priorityListList = new ArrayList<>();
-
-    public void addPriorityList(PriorityList priorityList){
-        priorityListList.add(priorityList);
-        priorityList.getPriorityArticlesList().add(this);
-    }
-
-
+    @ManyToOne
+    @JoinColumn
+    private PriorityList priorityList;
 
 
 }

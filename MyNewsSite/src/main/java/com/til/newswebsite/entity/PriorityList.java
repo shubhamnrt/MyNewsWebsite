@@ -34,7 +34,11 @@ public class PriorityList {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @ManyToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "priorityList")
     private List<PriorityArticles> priorityArticlesList = new ArrayList<>();
+
+    public void addPriorityArticles(PriorityArticles priorityArticles){
+        priorityArticlesList.add(priorityArticles);
+        priorityArticles.setPriorityList(this);
+    }
 }
