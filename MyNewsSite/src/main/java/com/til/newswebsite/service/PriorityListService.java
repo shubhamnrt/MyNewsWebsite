@@ -60,9 +60,9 @@ public class PriorityListService {
         return articleList;
     }
 
-    public String deleteArticleFromPriorityList(Integer PLid, Integer Aid){
-
-        priorityArticlesRepository.deletePriorityArticlesByArticleArticleIdAndPriorityListPriorityListId(Aid,PLid);
-        return "Deleted Successfully!";
-    }
+//    public String deleteArticleFromPriorityList(Integer PLid, Integer Aid){
+//
+//        priorityArticlesRepository.deletePriorityArticlesByArticleArticleIdAndPriorityListPriorityListId(Aid,PLid);
+//        return "Deleted Successfully!";
+//    }
 }

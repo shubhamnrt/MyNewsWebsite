@@ -1,6 +1,10 @@
 package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.ArticleDto;
+import com.til.newswebsite.dto.articleupdate.ContentDto;
+import com.til.newswebsite.dto.articleupdate.DescriptionDto;
+import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
+import com.til.newswebsite.dto.articleupdate.TitleDto;
 import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.AuthorRepository;
@@ -71,6 +75,32 @@ public class ArticleService {
         articleRepository.deleteById(id);
         return "Article removed !! " + id;
     }
+    public String updateArticleDescription(DescriptionDto descriptionDto){
+        Article article = articleRepository.getById(descriptionDto.getArticleId());
+        article.setDescription(descriptionDto.getDescription());
+        articleRepository.save(article);
+        return "Updated Description!";
+    }
 
+    public String updateArticleTitle(TitleDto titleDto){
+        Article article = articleRepository.getById(titleDto.getArticleId());
+        article.setTitle(titleDto.getTitle());
+        articleRepository.save(article);
+        return "Updated Title";
+    }
+
+    public String updateArticleContent(ContentDto contentDto){
+        Article article = articleRepository.getById(contentDto.getArticleId());
+        article.setContent(contentDto.getContent());
+        articleRepository.save(article);
+        return "Updated Content";
+    }
+
+    public String updateArticleImageURl(ImageUrlDto imageUrlDto){
+        Article article = articleRepository.getById(imageUrlDto.getArticleId());
+        article.setImageUrl(imageUrlDto.getImageUrl());
+        articleRepository.save(article);
+        return "Updated ImageUrl";
+    }
 }
 

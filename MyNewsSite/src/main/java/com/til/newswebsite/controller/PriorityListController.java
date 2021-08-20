@@ -38,8 +38,8 @@ public class PriorityListController {
         return priorityListService.getAllArticles(id);
     }
 
-    @DeleteMapping("/delete/{PLid}/{Aid}")
-    public String deleteArticleFromPriorityList(@PathVariable Integer PLid, @PathVariable Integer Aid){
-        return priorityListService.deleteArticleFromPriorityList(PLid,Aid);
-    }
+//    @DeleteMapping("/delete/{PLid}/{Aid}")
+//    public String deleteArticleFromPriorityList(@PathVariable Integer PLid, @PathVariable Integer Aid){
+//        return priorityListService.deleteArticleFromPriorityList(PLid,Aid);
+//    }
 }
