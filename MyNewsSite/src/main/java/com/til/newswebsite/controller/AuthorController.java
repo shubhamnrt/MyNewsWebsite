@@ -15,6 +15,11 @@ public class AuthorController {
     @Autowired
     AuthorService authorService;
 
+    @GetMapping("/demo")
+    public String welcome() {
+        return "Welcome to MyNewsWebsite !!";
+    }
+
     @PostMapping("/signup")
     public Author createAuthor(AuthorDto authorDto){
         return authorService.addAuthor(authorDto);
@@ -30,7 +35,7 @@ public class AuthorController {
         return authorService.getAuthorById(id);
     }
 
-    @GetMapping("/{fullName")
+    @GetMapping("/{fullName}")
     public Author getAuthorByName(@PathVariable String fullName){
         return authorService.getAuthorByName(fullName);
     }
