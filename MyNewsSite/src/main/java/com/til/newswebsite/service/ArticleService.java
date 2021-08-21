@@ -41,25 +41,25 @@ public class ArticleService {
         article.setDescription(articleDto.getDescription());
         article.setImageUrl(articleDto.getImageUrl());
         article.setTitle(articleDto.getTitle());
-        categoryRepository.getById(articleDto.getCategoryId()).addArticle(article);
+        //categoryRepository.getById(articleDto.getCategoryId()).addArticle(article);
 
         return new ArticleCreateResponseDto("success",articleRepository.save(article).getArticleId());
     }
+
 
     public List<ArticleListResponseDto> getArticles(){
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
          articleRepository.findAll().forEach(article -> {
-             ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto(
+
+             articleListResponseDtoList.add(new ArticleListResponseDto(
                      article.getArticleId(),article.getTitle(),article.getDescription(),
                      article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
-                     article.getImageUrl(),article.getCreatedAt());
-
-             articleListResponseDtoList.add(articleListResponseDto);
+                     article.getImageUrl(),article.getCreatedAt()));
          });
-
          return articleListResponseDtoList;
     }
+
 
     public ArticleResponseDto getArticleById(int id){
 
@@ -69,24 +69,25 @@ public class ArticleService {
                 article.getArticleId(),article.getTitle(),article.getDescription(),article.getContent(),
                 article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
                 article.getImageUrl(),article.getCreatedAt());
-
     }
+
 
     public ArticleResponseDto getArticleByTitle(String title){
 
         Article article = articleRepository.findByTitle(title);
 
-        return new ArticleResponseDto(
-                article.getArticleId(),article.getTitle(),article.getDescription(),article.getContent(),
+        return new ArticleResponseDto(article.getArticleId(),article.getTitle(),
+                article.getDescription(),article.getContent(),
                 article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
                 article.getImageUrl(),article.getCreatedAt());
-
     }
+
 
     public String deleteArticle(int id) {
         articleRepository.deleteById(id);
         return "Article removed !! " + id;
     }
+
 
     public String updateArticleDescription(DescriptionDto descriptionDto){
         Article article = articleRepository.getById(descriptionDto.getArticleId());
@@ -95,6 +96,7 @@ public class ArticleService {
         return "Updated Description!";
     }
 
+
     public String updateArticleTitle(TitleDto titleDto){
         Article article = articleRepository.getById(titleDto.getArticleId());
         article.setTitle(titleDto.getTitle());
@@ -102,12 +104,14 @@ public class ArticleService {
         return "Updated Title";
     }
 
+
     public String updateArticleContent(ContentDto contentDto){
         Article article = articleRepository.getById(contentDto.getArticleId());
         article.setContent(contentDto.getContent());
         articleRepository.save(article);
         return "Updated Content";
     }
+
 
     public String updateArticleImageURl(ImageUrlDto imageUrlDto){
         Article article = articleRepository.getById(imageUrlDto.getArticleId());

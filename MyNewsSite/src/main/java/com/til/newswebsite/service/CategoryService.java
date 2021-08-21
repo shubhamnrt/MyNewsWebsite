@@ -3,6 +3,7 @@ package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.CategoryDto;
 import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.categoryresponse.CategoryResponseDto;
 import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.CategoryRepository;
@@ -22,43 +23,45 @@ public class CategoryService {
     private ArticleRepository articleRepository;
 
 
-    public Category addCategory(CategoryDto categoryDto){
+    public CategoryResponseDto addCategory(CategoryDto categoryDto){
         Category category = new Category();
-
         category.setCategoryName(categoryDto.getCategoryName());
         category.setDescription(categoryDto.getDescription());
-
-        return categoryRepository.save(category);
+        category = categoryRepository.save(category);
+        return new CategoryResponseDto(category.getId(),category.getCategoryName(),category.getDescription());
     }
 
 
-    public List<Category> getAllCategory(){
-        return  categoryRepository.findAll();
+    public List<CategoryResponseDto> getAllCategory(){
+        List<CategoryResponseDto> categoryResponseDtoList = new ArrayList<>();
+        categoryRepository.findAll().forEach(category -> {
+            categoryResponseDtoList.add(new CategoryResponseDto(category.getId(),
+                    category.getCategoryName(),category.getDescription()));
+        });
+
+        return categoryResponseDtoList;
     }
 
 
-    public Category getCategoryById(Integer id){
-        return categoryRepository.findById(id).orElse(null);
+    public CategoryResponseDto getCategoryById(Integer id)
+    {
+        Category category = categoryRepository.findById(id).orElse(null);
+        return new CategoryResponseDto(category.getId(),category.getCategoryName(),category.getDescription());
     }
 
     public List<ArticleListResponseDto> getAllArticlesFromCategory(Integer categoryId){
-        List<ArticleListResponseDto> articleListDtoListResponse = new ArrayList<>();
+        List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
         articleRepository.findAllByCategory(categoryRepository.getById(categoryId)).forEach(article -> {
-            ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
 
-            articleListResponseDto.setArticleId(article.getArticleId());
-            articleListResponseDto.setTitle(article.getTitle());
-            articleListResponseDto.setDescription(article.getDescription());
-            articleListResponseDto.setImageUrl(article.getImageUrl());
-            articleListResponseDto.setCreatedAt(article.getCreatedAt());
-            articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
-            articleListResponseDto.setAuthorName(article.getAuthor().getFullName());
+            articleListResponseDtoList.add(new ArticleListResponseDto(
+                    article.getArticleId(),article.getTitle(),article.getDescription(),
+                    article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
+                    article.getImageUrl(),article.getCreatedAt()));
 
-            articleListDtoListResponse.add(articleListResponseDto);
         });
 
-        return articleListDtoListResponse;
+        return articleListResponseDtoList;
     }
 
 }

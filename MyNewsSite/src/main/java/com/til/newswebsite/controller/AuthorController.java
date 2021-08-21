@@ -1,6 +1,7 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.AuthorDto;
+import com.til.newswebsite.dto.authorresponse.AuthorResponseDto;
 import com.til.newswebsite.entity.Author;
 import com.til.newswebsite.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class AuthorController {
     }
 
     @GetMapping("/allAuthors")
-    public List<Author> getAllAuthors(){
+    public List<AuthorResponseDto> getAllAuthors(){
         return authorService.getAllAuthors();
     }
 

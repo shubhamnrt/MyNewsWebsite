@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PriorityArticlesRepository extends JpaRepository<PriorityArticles,Integer> {
+public interface PriorityArticlesRepository extends JpaRepository<PriorityArticles,String> {
     public List<PriorityArticles> findAllByPriorityList(PriorityList priorityList);
 }

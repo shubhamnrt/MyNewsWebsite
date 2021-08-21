@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 public class PriorityArticles {
     @Id
-    private Integer PriorityArticlesId;
+    private String PriorityArticlesId;
 
     @CreationTimestamp
     private Date createdAt;

@@ -3,6 +3,8 @@ package com.til.newswebsite.controller;
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
 import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.prioritylistresponse.PListResponseDto;
+import com.til.newswebsite.dto.prioritylistresponse.PListsResponseDto;
 import com.til.newswebsite.entity.PriorityArticles;
 import com.til.newswebsite.entity.PriorityList;
 import com.til.newswebsite.service.PriorityListService;
@@ -19,7 +21,7 @@ public class PriorityListController {
     PriorityListService priorityListService;
 
     @PostMapping("/createPList")
-    public PriorityList createPList(PriorityListDto priorityListDto){
+    public PListResponseDto createPList(PriorityListDto priorityListDto){
         return priorityListService.addPriorityList(priorityListDto);
     }
 
@@ -29,7 +31,7 @@ public class PriorityListController {
     }
 
     @GetMapping("/allPList")
-    public List<PriorityList> getAllPriorityLists(){
+    public List<PListsResponseDto> getAllPriorityLists(){
         return priorityListService.getAllPriorityLists();
     }
 
@@ -38,8 +40,8 @@ public class PriorityListController {
         return priorityListService.getAllArticles(priorityListId);
     }
 
-    @DeleteMapping("/delete/{PLid}/{Aid}")
-    public String deleteArticleFromPriorityList(@PathVariable Integer PLid, @PathVariable Integer Aid){
-        return priorityListService.deleteArticleFromPriorityList(PLid,Aid);
+    @DeleteMapping("/delete/{id}/")
+    public String deleteArticleFromPriorityList(@PathVariable String id){
+        return priorityListService.deleteArticleFromPriorityList(id);
     }
 }

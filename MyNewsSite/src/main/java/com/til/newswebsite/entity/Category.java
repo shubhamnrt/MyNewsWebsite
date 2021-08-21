@@ -35,7 +35,7 @@ public class Category {
     private Date updatedAt;
 
     @OneToMany( mappedBy = "category")
-    private List<Article> articleList = new ArrayList<Article>(0);
+    private List<Article> articleList = new ArrayList<>();
 
     public void addArticle(Article article){
         articleList.add(article);
