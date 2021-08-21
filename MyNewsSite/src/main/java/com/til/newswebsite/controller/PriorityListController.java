@@ -33,7 +33,7 @@ public class PriorityListController {
         return priorityListService.getAllPriorityLists();
     }
 
-    @GetMapping("/{id}/allArticles")
+    @GetMapping("/{priorityListId}/allArticles")
     public List<ArticleListResponseDto> getAllArticles(@PathVariable Integer priorityListId){
         return priorityListService.getAllArticles(priorityListId);
     }

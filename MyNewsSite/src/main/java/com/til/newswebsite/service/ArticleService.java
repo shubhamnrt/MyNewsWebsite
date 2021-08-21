@@ -43,66 +43,44 @@ public class ArticleService {
         article.setTitle(articleDto.getTitle());
         categoryRepository.getById(articleDto.getCategoryId()).addArticle(article);
 
-        articleCreateResponseDto.setArticleId(articleRepository.save(article).getArticleId());
-
-        articleCreateResponseDto.setMessage("success");
-
-        return articleCreateResponseDto;
+        return new ArticleCreateResponseDto("success",articleRepository.save(article).getArticleId());
     }
 
     public List<ArticleListResponseDto> getArticles(){
-        List<ArticleListResponseDto> articleListDtoListResponse = new ArrayList<>();
+        List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
          articleRepository.findAll().forEach(article -> {
-             ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
+             ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto(
+                     article.getArticleId(),article.getTitle(),article.getDescription(),
+                     article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
+                     article.getImageUrl(),article.getCreatedAt());
 
-             articleListResponseDto.setArticleId(article.getArticleId());
-             articleListResponseDto.setTitle(article.getTitle());
-             articleListResponseDto.setDescription(article.getDescription());
-             articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
-             articleListResponseDto.setAuthorName(article.getAuthor().getFullName());
-             articleListResponseDto.setImageUrl(article.getImageUrl());
-             articleListResponseDto.setCreatedAt(article.getCreatedAt());
-
-             articleListDtoListResponse.add(articleListResponseDto);
+             articleListResponseDtoList.add(articleListResponseDto);
          });
 
-         return articleListDtoListResponse;
+         return articleListResponseDtoList;
     }
 
     public ArticleResponseDto getArticleById(int id){
 
-
         Article article = articleRepository.findById(id).orElse(null);
-        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
 
-        articleResponseDto.setArticleId(article.getArticleId());
-        articleResponseDto.setTitle(article.getTitle());
-        articleResponseDto.setDescription(article.getDescription());
-        articleResponseDto.setContent(article.getContent());
-        articleResponseDto.setCreatedAt(article.getCreatedAt());
-        articleResponseDto.setImageUrl(article.getImageUrl());
-        articleResponseDto.setCategoryName(article.getAuthor().getFullName());
-        articleResponseDto.setCategoryName(article.getCategory().getCategoryName());
+        return new ArticleResponseDto(
+                article.getArticleId(),article.getTitle(),article.getDescription(),article.getContent(),
+                article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
+                article.getImageUrl(),article.getCreatedAt());
 
-        return articleResponseDto;
     }
 
     public ArticleResponseDto getArticleByTitle(String title){
 
         Article article = articleRepository.findByTitle(title);
-        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
 
-        articleResponseDto.setArticleId(article.getArticleId());
-        articleResponseDto.setTitle(article.getTitle());
-        articleResponseDto.setDescription(article.getDescription());
-        articleResponseDto.setContent(article.getContent());
-        articleResponseDto.setCreatedAt(article.getCreatedAt());
-        articleResponseDto.setImageUrl(article.getImageUrl());
-        articleResponseDto.setCategoryName(article.getCategory().getCategoryName());
-        articleResponseDto.setAuthorName(article.getAuthor().getFullName());
+        return new ArticleResponseDto(
+                article.getArticleId(),article.getTitle(),article.getDescription(),article.getContent(),
+                article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
+                article.getImageUrl(),article.getCreatedAt());
 
-        return articleResponseDto;
     }
 
     public String deleteArticle(int id) {
