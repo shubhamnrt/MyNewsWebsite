@@ -3,6 +3,7 @@ package com.til.newswebsite.controller;
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
 import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.prioritylistresponse.AddArticleResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListsResponseDto;
 import com.til.newswebsite.entity.PriorityArticles;
@@ -26,7 +27,7 @@ public class PriorityListController {
     }
 
     @PostMapping("/addArticles")
-    public PriorityArticles addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
+    public AddArticleResponseDto addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
         return priorityListService.addArticleToPriorityList(priorityArticlesDto);
     }
 

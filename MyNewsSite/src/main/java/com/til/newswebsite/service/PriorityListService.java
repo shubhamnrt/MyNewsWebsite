@@ -3,6 +3,7 @@ package com.til.newswebsite.service;
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
 import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.prioritylistresponse.AddArticleResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListsResponseDto;
 import com.til.newswebsite.entity.Article;
@@ -36,7 +37,7 @@ public class PriorityListService {
     }
 
 
-    public PriorityArticles addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
+    public AddArticleResponseDto addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
         PriorityArticles priorityArticles = new PriorityArticles();
 
         String id = String.valueOf(priorityArticlesDto.getPriorityListId()) + "_" +
@@ -44,9 +45,8 @@ public class PriorityListService {
         priorityArticles.setPriorityArticlesId(id);
         priorityArticles.setPriorityList(priorityListRepository.getById(priorityArticlesDto.getPriorityListId()));
         priorityArticles.setArticle(articleRepository.getById(priorityArticlesDto.getArticleId()));
-        priorityArticlesRepository.save(priorityArticles);
 
-        return priorityArticles;
+        return new AddArticleResponseDto("success",priorityArticlesRepository.save(priorityArticles).getPriorityArticlesId());
     }
 
 
