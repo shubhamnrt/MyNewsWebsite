@@ -1,7 +1,7 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.CategoryDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
 import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

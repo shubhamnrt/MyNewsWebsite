@@ -2,7 +2,7 @@ package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
 import com.til.newswebsite.entity.PriorityArticles;
 import com.til.newswebsite.entity.PriorityList;
 import com.til.newswebsite.service.PriorityListService;

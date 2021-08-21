@@ -1,7 +1,9 @@
 package com.til.newswebsite.service;
 
 import com.til.newswebsite.dto.ArticleDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleCreateResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleResponseDto;
 import com.til.newswebsite.dto.articleupdate.ContentDto;
 import com.til.newswebsite.dto.articleupdate.DescriptionDto;
 import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
@@ -28,44 +30,33 @@ public class ArticleService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public Article createArticle(ArticleDto articleDto) {
+    public ArticleCreateResponseDto createArticle(ArticleDto articleDto) {
 
         Article article = new Article();
+        ArticleCreateResponseDto articleCreateResponseDto = new ArticleCreateResponseDto();
 
         article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
-
         article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
         article.setContent(articleDto.getContent());
         article.setDescription(articleDto.getDescription());
         article.setImageUrl(articleDto.getImageUrl());
         article.setTitle(articleDto.getTitle());
         categoryRepository.getById(articleDto.getCategoryId()).addArticle(article);
-        return articleRepository.save(article);
+
+        articleCreateResponseDto.setArticleId(articleRepository.save(article).getArticleId());
+
+        articleCreateResponseDto.setMessage("success");
+
+        return articleCreateResponseDto;
     }
-//
-//    public List<Article> createArticles(List<ArticleDto> articlesDto)
-//    {
-//        List<Article> articles = new ArrayList<>();
-//        articlesDto.forEach((articleDto) -> {
-//            Article article = new Article();
-//
-//            article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
-//            article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
-//            article.setContent(articleDto.getContent());
-//            article.setDescription(articleDto.getDescription());
-//            article.setImageUrl(articleDto.getImageUrl());
-//            article.setTitle(articleDto.getTitle());
-//            articles.add(article);
-//        });
-//
-//        return articleRepository.saveAll(articles);
-//    }
 
     public List<ArticleListResponseDto> getArticles(){
         List<ArticleListResponseDto> articleListDtoListResponse = new ArrayList<>();
+
          articleRepository.findAll().forEach(article -> {
              ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
 
+             articleListResponseDto.setArticleId(article.getArticleId());
              articleListResponseDto.setTitle(article.getTitle());
              articleListResponseDto.setDescription(article.getDescription());
              articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
@@ -79,12 +70,39 @@ public class ArticleService {
          return articleListDtoListResponse;
     }
 
-    public Article getArticleById(int id){
-        return articleRepository.findById(id).orElse(null);
+    public ArticleResponseDto getArticleById(int id){
+
+
+        Article article = articleRepository.findById(id).orElse(null);
+        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
+
+        articleResponseDto.setArticleId(article.getArticleId());
+        articleResponseDto.setTitle(article.getTitle());
+        articleResponseDto.setDescription(article.getDescription());
+        articleResponseDto.setContent(article.getContent());
+        articleResponseDto.setCreatedAt(article.getCreatedAt());
+        articleResponseDto.setImageUrl(article.getImageUrl());
+        articleResponseDto.setCategoryName(article.getAuthor().getFullName());
+        articleResponseDto.setCategoryName(article.getCategory().getCategoryName());
+
+        return articleResponseDto;
     }
 
-    public Article getArticleByTitle(String title){
-        return articleRepository.findByTitle(title);
+    public ArticleResponseDto getArticleByTitle(String title){
+
+        Article article = articleRepository.findByTitle(title);
+        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
+
+        articleResponseDto.setArticleId(article.getArticleId());
+        articleResponseDto.setTitle(article.getTitle());
+        articleResponseDto.setDescription(article.getDescription());
+        articleResponseDto.setContent(article.getContent());
+        articleResponseDto.setCreatedAt(article.getCreatedAt());
+        articleResponseDto.setImageUrl(article.getImageUrl());
+        articleResponseDto.setCategoryName(article.getCategory().getCategoryName());
+        articleResponseDto.setAuthorName(article.getAuthor().getFullName());
+
+        return articleResponseDto;
     }
 
     public String deleteArticle(int id) {

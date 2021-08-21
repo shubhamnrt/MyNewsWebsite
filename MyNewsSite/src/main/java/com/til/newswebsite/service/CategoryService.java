@@ -2,7 +2,7 @@ package com.til.newswebsite.service;
 
 
 import com.til.newswebsite.dto.CategoryDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
 import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.CategoryRepository;
@@ -47,6 +47,7 @@ public class CategoryService {
         articleRepository.findAllByCategory(categoryRepository.getById(categoryId)).forEach(article -> {
             ArticleListResponseDto articleListResponseDto = new ArticleListResponseDto();
 
+            articleListResponseDto.setArticleId(article.getArticleId());
             articleListResponseDto.setTitle(article.getTitle());
             articleListResponseDto.setDescription(article.getDescription());
             articleListResponseDto.setImageUrl(article.getImageUrl());

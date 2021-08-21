@@ -1,7 +1,9 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.ArticleDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleCreateResponseDto;
+import com.til.newswebsite.dto.articleresponse.ArticleResponseDto;
 import com.til.newswebsite.dto.articleupdate.ContentDto;
 import com.til.newswebsite.dto.articleupdate.DescriptionDto;
 import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
@@ -23,28 +25,23 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping("/createArticle")
-    public Article createArticle(@RequestBody ArticleDto articleDto) {
+    public ArticleCreateResponseDto createArticle(@RequestBody ArticleDto articleDto) {
 
         return articleService.createArticle(articleDto);
     }
-
-//    @PostMapping("/addArticles")
-//    public List<Article> addArticle(@RequestBody List<ArticleDto> articlesDto){
-//        return articleService.createArticles(articlesDto);
-//    }
 
     @GetMapping("/allArticles")
     public List<ArticleListResponseDto> findAllArticles(){
         return articleService.getArticles();
     }
 
-    @GetMapping("/{id}")
-    public Article findArticleById(@PathVariable int id){
-        return articleService.getArticleById(id);
+    @GetMapping("/{articleId}")
+    public ArticleResponseDto findArticleById(@PathVariable int articleId){
+        return articleService.getArticleById(articleId);
     }
 
     @GetMapping("/articleTitle/{title}")
-    public Article findArticleByTitle(@PathVariable String title){
+    public ArticleResponseDto findArticleByTitle(@PathVariable String title){
         return articleService.getArticleByTitle(title);
     }
 
