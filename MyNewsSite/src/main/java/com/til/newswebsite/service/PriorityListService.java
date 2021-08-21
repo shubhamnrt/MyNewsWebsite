@@ -40,8 +40,8 @@ public class PriorityListService {
     public PriorityArticles addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
         PriorityArticles priorityArticles = new PriorityArticles();
 
-        Integer id = Integer.valueOf(String.valueOf(priorityArticlesDto.getPriorityListId())+"_"
-                + String.valueOf(priorityArticlesDto.getArticleId()));
+        Integer id = Integer.valueOf(String.valueOf(priorityArticlesDto.getPriorityListId()) + "_" +
+                    String.valueOf(priorityArticlesDto.getArticleId()));
         priorityArticles.setPriorityArticlesId(id);
         priorityArticles.setPriorityList(priorityListRepository.getById(priorityArticlesDto.getPriorityListId()));
         priorityArticles.setArticle(articleRepository.getById(priorityArticlesDto.getArticleId()));
@@ -77,8 +77,6 @@ public class PriorityListService {
                     articleListResponseDto.setCategoryName(article.getCategory().getCategoryName());
 
                     articleListResponseDtoList.add(articleListResponseDto);
-
-
 
                 });
 

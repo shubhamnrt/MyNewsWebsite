@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
     @GetMapping("/allArticles/{categoryId}")
-    public List<ArticleListResponseDto> getAllArticlesFromCategory(@PathVariable Integer id){
-        return categoryService.getAllArticlesFromCategory(id);
+    public List<ArticleListResponseDto> getAllArticlesFromCategory(@PathVariable Integer categoryId){
+        return categoryService.getAllArticlesFromCategory(categoryId);
     }
 }
