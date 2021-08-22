@@ -22,5 +22,5 @@ public class ArticleDto {
     private Integer categoryId;
 
     private Integer authorId;
-    
+
 }
