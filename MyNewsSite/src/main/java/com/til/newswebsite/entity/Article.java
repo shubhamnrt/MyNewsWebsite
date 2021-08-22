@@ -37,10 +37,10 @@ public class Article {
     @UpdateTimestamp
     private Date updatedAt;
 
+    @Lob
     private String description;
 
-    @Column(length = 65535)
-    @Type(type="text")
+    @Lob
     private String content;
 
     @ManyToOne
