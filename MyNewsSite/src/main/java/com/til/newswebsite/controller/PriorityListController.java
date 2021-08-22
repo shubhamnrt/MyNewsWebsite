@@ -6,8 +6,6 @@ import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.AddArticleResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListResponseDto;
 import com.til.newswebsite.dto.prioritylistresponse.PListsResponseDto;
-import com.til.newswebsite.entity.PriorityArticles;
-import com.til.newswebsite.entity.PriorityList;
 import com.til.newswebsite.service.PriorityListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

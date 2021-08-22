@@ -45,8 +45,8 @@ public class PriorityListService {
         priorityArticles.setPriorityArticlesId(id);
         priorityArticles.setPriorityList(priorityListRepository.getById(priorityArticlesDto.getPriorityListId()));
         priorityArticles.setArticle(articleRepository.getById(priorityArticlesDto.getArticleId()));
-
-        return new AddArticleResponseDto("success",priorityArticlesRepository.save(priorityArticles).getPriorityArticlesId());
+        priorityArticlesRepository.save(priorityArticles);
+        return new AddArticleResponseDto("success",id);
     }
 
 

@@ -8,7 +8,6 @@ import com.til.newswebsite.dto.articleupdate.ContentDto;
 import com.til.newswebsite.dto.articleupdate.DescriptionDto;
 import com.til.newswebsite.dto.articleupdate.ImageUrlDto;
 import com.til.newswebsite.dto.articleupdate.TitleDto;
-import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,6 @@ public class ArticleController {
 
     @PostMapping("/createArticle")
     public ArticleCreateResponseDto createArticle(@RequestBody ArticleDto articleDto) {
-
         return articleService.createArticle(articleDto);
     }
 
