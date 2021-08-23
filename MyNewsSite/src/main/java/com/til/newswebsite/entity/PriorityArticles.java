@@ -8,9 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @AllArgsConstructor
@@ -20,7 +18,8 @@ import java.util.List;
 @Entity
 public class PriorityArticles {
     @Id
-    private Integer PriorityArticlesId;
+    @Column(length = 30)
+    private String PriorityArticlesId;
 
     @CreationTimestamp
     private Date createdAt;
@@ -35,6 +34,5 @@ public class PriorityArticles {
     @ManyToOne
     @JoinColumn
     private PriorityList priorityList;
-
 
 }

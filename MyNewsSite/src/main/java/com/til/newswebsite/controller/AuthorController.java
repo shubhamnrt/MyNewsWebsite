@@ -5,9 +5,12 @@ import com.til.newswebsite.entity.Author;
 import com.til.newswebsite.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import com.til.newswebsite.dto.authorresponse.AuthorResponseDto;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {
@@ -21,12 +24,12 @@ public class AuthorController {
     }
 
     @PostMapping("/signup")
-    public Author createAuthor(AuthorDto authorDto){
+    public Author createAuthor(@RequestBody AuthorDto authorDto){
         return authorService.addAuthor(authorDto);
     }
 
     @GetMapping("/allAuthors")
-    public List<Author> getAllAuthors(){
+    public List<AuthorResponseDto> getAllAuthors(){
         return authorService.getAllAuthors();
     }
 

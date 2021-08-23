@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -36,8 +37,10 @@ public class Article {
     @UpdateTimestamp
     private Date updatedAt;
 
+    @Lob
     private String description;
 
+    @Lob
     private String content;
 
     @ManyToOne
@@ -52,8 +55,9 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<PriorityArticles> priorityArticlesList = new ArrayList<>();
 
-   public void addPriorityArticles(PriorityArticles priorityArticles){
-       priorityArticlesList.add(priorityArticles);
-       priorityArticles.setArticle(this);
-   }
+    public void addPriorityArticles(PriorityArticles priorityArticles){
+        priorityArticlesList.add(priorityArticles);
+        priorityArticles.setArticle(this);
+    }
+
 }
