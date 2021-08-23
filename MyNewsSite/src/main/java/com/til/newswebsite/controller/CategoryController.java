@@ -1,10 +1,9 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.CategoryDto;
-import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
-import com.til.newswebsite.dto.categoryresponse.CategoryResponseDto;
-import com.til.newswebsite.entity.Category;
-import com.til.newswebsite.service.CategoryService;
+import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.CategoryResponseDto;
+import com.til.newswebsite.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,26 +14,26 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryServiceImpl categoryServiceImpl;
 
     @PostMapping("/addCategory")
     public CategoryResponseDto addCategory(@RequestBody CategoryDto categoryDto) {
-        return categoryService.addCategory(categoryDto);
+        return categoryServiceImpl.addCategory(categoryDto);
     }
 
     @GetMapping("/allCategory")
     public List<CategoryResponseDto> getAllCategory(){
-        return categoryService.getAllCategory();
+        return categoryServiceImpl.getAllCategory();
     }
 
     @GetMapping("/{id}")
     public CategoryResponseDto getCategoryById(@PathVariable Integer id){
-        return categoryService.getCategoryById(id);
+        return categoryServiceImpl.getCategoryById(id);
     }
 
     @GetMapping("/allArticles/{categoryId}")
     public List<ArticleListResponseDto> getAllArticlesFromCategory(@PathVariable Integer categoryId){
-        return categoryService.getAllArticlesFromCategory(categoryId);
+        return categoryServiceImpl.getAllArticlesFromCategory(categoryId);
     }
 
 }

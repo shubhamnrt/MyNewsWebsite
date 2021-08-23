@@ -1,4 +1,4 @@
-package com.til.newswebsite.dto.articleresponse;
+package com.til.newswebsite.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleCreateResponseDto {
+public class PListResponseDto {
     String message;
-    Integer articleId;
+    Integer pListId;
 }

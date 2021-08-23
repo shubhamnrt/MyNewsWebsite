@@ -1,4 +1,4 @@
-package com.til.newswebsite.dto.authorresponse;
+package com.til.newswebsite.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

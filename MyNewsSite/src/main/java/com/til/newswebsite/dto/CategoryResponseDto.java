@@ -1,4 +1,4 @@
-package com.til.newswebsite.dto.categoryresponse;
+package com.til.newswebsite.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

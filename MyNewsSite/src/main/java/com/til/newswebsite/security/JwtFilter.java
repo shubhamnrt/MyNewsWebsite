@@ -1,7 +1,7 @@
 package com.til.newswebsite.security;
 
 
-import com.til.newswebsite.service.CustomUserDetailsService;
+import com.til.newswebsite.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +22,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private CustomUserDetailsService service;
+    private CustomUserDetailsServiceImpl service;
 
 
     @Override

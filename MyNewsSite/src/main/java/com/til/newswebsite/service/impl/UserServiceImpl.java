@@ -1,4 +1,4 @@
-package com.til.newswebsite.service;
+package com.til.newswebsite.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -8,7 +8,7 @@ import com.til.newswebsite.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserServiceImpl {
 
 	@Autowired
 	private UserRepository repository;

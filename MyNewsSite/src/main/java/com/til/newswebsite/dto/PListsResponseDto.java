@@ -1,4 +1,5 @@
-package com.til.newswebsite.dto.prioritylistresponse;
+package com.til.newswebsite.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PListResponseDto {
-    String message;
+public class PListsResponseDto {
     Integer pListId;
+    String name;
 }

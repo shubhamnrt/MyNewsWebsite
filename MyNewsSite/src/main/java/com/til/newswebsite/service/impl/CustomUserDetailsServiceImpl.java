@@ -1,4 +1,4 @@
-package com.til.newswebsite.service;
+package com.til.newswebsite.service.impl;
 
 import com.til.newswebsite.entity.User;
 import com.til.newswebsite.repository.UserRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 

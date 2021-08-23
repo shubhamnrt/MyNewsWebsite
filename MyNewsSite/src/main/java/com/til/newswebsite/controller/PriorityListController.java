@@ -2,11 +2,11 @@ package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.PriorityArticlesDto;
 import com.til.newswebsite.dto.PriorityListDto;
-import com.til.newswebsite.dto.articleresponse.ArticleListResponseDto;
-import com.til.newswebsite.dto.prioritylistresponse.AddArticleResponseDto;
-import com.til.newswebsite.dto.prioritylistresponse.PListResponseDto;
-import com.til.newswebsite.dto.prioritylistresponse.PListsResponseDto;
-import com.til.newswebsite.service.PriorityListService;
+import com.til.newswebsite.dto.ArticleListResponseDto;
+import com.til.newswebsite.dto.AddArticleResponseDto;
+import com.til.newswebsite.dto.PListResponseDto;
+import com.til.newswebsite.dto.PListsResponseDto;
+import com.til.newswebsite.service.impl.PriorityListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +17,30 @@ import java.util.List;
 public class PriorityListController {
 
     @Autowired
-    PriorityListService priorityListService;
+    PriorityListServiceImpl priorityListServiceImpl;
 
     @PostMapping("/createPList")
     public PListResponseDto createPList(PriorityListDto priorityListDto){
-        return priorityListService.addPriorityList(priorityListDto);
+        return priorityListServiceImpl.addPriorityList(priorityListDto);
     }
 
     @PostMapping("/addArticles")
     public AddArticleResponseDto addArticleToPriorityList(PriorityArticlesDto priorityArticlesDto){
-        return priorityListService.addArticleToPriorityList(priorityArticlesDto);
+        return priorityListServiceImpl.addArticleToPriorityList(priorityArticlesDto);
     }
 
     @GetMapping("/allPList")
     public List<PListsResponseDto> getAllPriorityLists(){
-        return priorityListService.getAllPriorityLists();
+        return priorityListServiceImpl.getAllPriorityLists();
     }
 
     @GetMapping("/{priorityListId}/allArticles")
     public List<ArticleListResponseDto> getAllArticles(@PathVariable Integer priorityListId){
-        return priorityListService.getAllArticles(priorityListId);
+        return priorityListServiceImpl.getAllArticles(priorityListId);
     }
 
     @DeleteMapping("/delete/{id}/")
     public String deleteArticleFromPriorityList(@PathVariable String id){
-        return priorityListService.deleteArticleFromPriorityList(id);
+        return priorityListServiceImpl.deleteArticleFromPriorityList(id);
     }
 }

@@ -27,7 +27,7 @@ package com.til.newswebsite.controller;
 
 import com.til.newswebsite.entity.AuthRequest;
 import com.til.newswebsite.security.JwtUtil;
-import com.til.newswebsite.service.UserService;
+import com.til.newswebsite.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +44,7 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserService service;
+	private UserServiceImpl service;
 
 	@PostMapping("/authenticate")
 	public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
