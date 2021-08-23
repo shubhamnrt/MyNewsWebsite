@@ -35,7 +35,6 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleCreateResponseDto createArticle(ArticleDto articleDto) {
 
         Article article = new Article();
-        ArticleCreateResponseDto articleCreateResponseDto = new ArticleCreateResponseDto();
 
         article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
         article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
@@ -49,7 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
 
-    public List<ArticleListResponseDto> getArticles(){
+    public List<ArticleListResponseDto> getArticles(String limit){
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
          articleRepository.findAll().forEach(article -> {

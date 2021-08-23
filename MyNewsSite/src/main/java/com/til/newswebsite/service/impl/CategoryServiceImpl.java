@@ -51,21 +51,19 @@ public class CategoryServiceImpl implements CategoryService {
         return new CategoryResponseDto(category.getId(),category.getCategoryName(),category.getDescription());
     }
 
-    public List<ArticleListResponseDto> getAllArticlesFromCategory(Integer categoryId){
+    public List<ArticleListResponseDto> getAllArticlesFromCategory(String categoryName,String limit){
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
-        articleRepository.findAllByCategory(categoryRepository.getById(categoryId)).forEach(article -> {
+        articleRepository.findAllByCategory(categoryRepository.findByCategoryName(categoryName)).forEach(article -> {
 
             articleListResponseDtoList.add(new ArticleListResponseDto(
                     article.getArticleId(),article.getTitle(),article.getDescription(),
                     article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
                     article.getImageUrl(),article.getCreatedAt()));
-
         });
 
         articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt));
         return articleListResponseDtoList;
-
     }
 
 }

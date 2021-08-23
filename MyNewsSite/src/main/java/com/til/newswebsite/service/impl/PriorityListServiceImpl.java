@@ -62,7 +62,7 @@ public class PriorityListServiceImpl implements PriorityListService {
     }
 
 
-    public List<ArticleListResponseDto> getAllArticles(Integer priorityListId){
+    public List<ArticleListResponseDto> getAllArticles(Integer priorityListId,String limit){
 
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
