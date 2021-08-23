@@ -3,9 +3,11 @@ package com.til.newswebsite.dto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,14 +1,20 @@
 package com.til.newswebsite.controller;
 
 import com.til.newswebsite.dto.AuthorDto;
+<<<<<<< HEAD
 import com.til.newswebsite.dto.AuthorResponseDto;
+=======
+>>>>>>> 09abe1a959f68e11dde68ec1830c3416eafa8dde
 import com.til.newswebsite.entity.Author;
 import com.til.newswebsite.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import com.til.newswebsite.dto.authorresponse.AuthorResponseDto;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {
@@ -22,8 +28,13 @@ public class AuthorController {
     }
 
     @PostMapping("/signup")
+<<<<<<< HEAD
     public Author createAuthor(AuthorDto authorDto){
         return authorServiceImpl.addAuthor(authorDto);
+=======
+    public Author createAuthor(@RequestBody AuthorDto authorDto){
+        return authorService.addAuthor(authorDto);
+>>>>>>> 09abe1a959f68e11dde68ec1830c3416eafa8dde
     }
 
     @GetMapping("/allAuthors")
