@@ -27,7 +27,6 @@ public class AuthorController {
     public Author createAuthor(@RequestBody AuthorDto authorDto) {
         return authorServiceImpl.addAuthor(authorDto);
     }
-    
 
     @GetMapping("/allAuthors")
     public List<AuthorResponseDto> getAllAuthors(){

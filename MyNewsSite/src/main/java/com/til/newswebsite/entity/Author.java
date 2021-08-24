@@ -22,8 +22,10 @@ public class Author {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer authorId;
 
+    @Column(unique = true,nullable = false)
     private String email;
 
+    @Column(unique = true,nullable = false)
     private String userName;
 
     private String fullName;

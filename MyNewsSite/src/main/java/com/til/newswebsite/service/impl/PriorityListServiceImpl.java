@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PriorityListServiceImpl implements PriorityListService {
@@ -76,13 +78,22 @@ public class PriorityListServiceImpl implements PriorityListService {
                             article.getImageUrl(),article.getCreatedAt()));
                 });
 
-        articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt));
-        return articleListResponseDtoList;
+        articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
+
+        int limitInt = Integer.parseInt(limit);
+
+        if(limitInt==-1){
+            return articleListResponseDtoList;
+        }
+        else{
+            Stream<ArticleListResponseDto> stream = articleListResponseDtoList.stream();
+            return stream.limit(limitInt).collect(Collectors.toList());
+        }
+
     }
-
-
     public String deleteArticleFromPriorityList(String id){
         priorityArticlesRepository.deleteById(id);
         return "Deleted Successfully!";
     }
+
 }

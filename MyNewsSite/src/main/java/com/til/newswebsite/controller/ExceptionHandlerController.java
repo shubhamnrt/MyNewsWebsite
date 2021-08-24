@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class ExceptionHandlerController {
 
     @ExceptionHandler(value ={InvalidRequestBodyException.class, AuthorAlreadyExistException.class,
-            NotFoundException.class, UnauthorizedException.class, InvalidRequestException.class})
+            NotFoundException.class, UnauthorizedException.class, InvalidRequestException.class,ArticleAlreadyExistException.class})
     public ResponseEntity<HashMap<String,String>> runTimeExceptionHandler(RuntimeException runtimeException){
 
         return ResponseEntity.badRequest().body(new HashMap<String, String>(){{put("message",runtimeException.getMessage());}});
