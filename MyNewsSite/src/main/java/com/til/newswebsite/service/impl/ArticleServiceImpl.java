@@ -21,16 +21,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-=======
-import java.util.stream.Stream;
-import java.util.stream.Collectors;
-import java.util.Comparator;
->>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
+
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -62,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         catch (DataIntegrityViolationException dataIntegrityViolationException)
         {
-            throw new ArticleAlreadyExistException("Article with Title :- "+article.getTitle()+" already exists");
+            throw new ArticleAlreadyExistException("Article Already Exist");
         }
 
     }
@@ -71,7 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleListResponseDto> getArticles(String limit){
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
-<<<<<<< HEAD
+
          articleRepository.findAll().forEach(article -> {
 
              articleListResponseDtoList.add(new ArticleListResponseDto(
@@ -84,21 +80,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         int limitInt = Integer.parseInt(limit);
 
-=======
-        articleRepository.findAll().forEach(article -> {
-
-            articleListResponseDtoList.add(new ArticleListResponseDto(
-                    article.getArticleId(),article.getTitle(),article.getDescription(),
-                    article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
-                    article.getImageUrl(),article.getCreatedAt()));
-        });
-
-         
-        articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
-        
-        int limitInt = Integer.parseInt(limit);
-        
->>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
         if(limitInt==-1){
             return articleListResponseDtoList;
         }
