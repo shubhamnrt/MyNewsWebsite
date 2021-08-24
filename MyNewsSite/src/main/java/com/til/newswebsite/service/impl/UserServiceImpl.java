@@ -21,10 +21,10 @@ public class UserServiceImpl {
 	@PostConstruct
 	public void initUsers() {
 		List<User> users = Stream.of(
-				new User(101, "user0", "pwd0", "user0@gmail.com"),
-				new User(102, "user1", "pwd1", "user1@gmail.com"),
-				new User(103, "user2", "pwd2", "user2@gmail.com"),
-				new User(104, "user3", "pwd3", "user3@gmail.com")
+				new User(101,"Raja","user0", "pwd0", "user0@gmail.com"),
+				new User(102,"Ram", "user1", "pwd1", "user1@gmail.com"),
+				new User(103,"Mohan", "user2", "pwd2", "user2@gmail.com"),
+				new User(104,"Roy","user3", "pwd3", "user3@gmail.com")
 		).collect(Collectors.toList());
 		repository.saveAll(users);
 	}

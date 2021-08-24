@@ -26,9 +26,11 @@ package com.til.newswebsite.controller;
 //}
 
 import com.til.newswebsite.entity.AuthRequest;
+import com.til.newswebsite.entity.User;
 import com.til.newswebsite.security.JwtUtil;
-import com.til.newswebsite.service.impl.UserServiceImpl;
+import com.til.newswebsite.service.impl.CustomUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,10 +48,10 @@ public class UserController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserServiceImpl service;
+	private CustomUserDetailsServiceImpl customUserDetailsService;
 
 	@PostMapping("/authenticate")
-	public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+	public ResponseEntity<?> generateToken(@RequestBody AuthRequest authRequest) throws Exception {
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
@@ -58,6 +60,11 @@ public class UserController {
 			throw new Exception("inavalid username/password");
 		}
 
-		return jwtUtil.generateToken(authRequest.getUserName());
+		String token= jwtUtil.generateToken(authRequest.getUserName());
+		return ResponseEntity.ok(token);
+	}
+	@PostMapping("/register")
+	public ResponseEntity<?> saveUser(@RequestBody User user) throws Exception {
+		return ResponseEntity.ok(customUserDetailsService.save(user));
 	}
 }

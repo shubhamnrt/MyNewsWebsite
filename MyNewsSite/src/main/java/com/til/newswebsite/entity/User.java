@@ -109,6 +109,7 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	private int id;
+	private String Name;
 	private String userName;
 	private String password;
 	private String email;
