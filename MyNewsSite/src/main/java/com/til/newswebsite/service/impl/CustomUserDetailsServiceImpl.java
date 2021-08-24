@@ -1,5 +1,6 @@
 package com.til.newswebsite.service.impl;
 
+import com.til.newswebsite.entity.AuthRequest;
 import com.til.newswebsite.entity.User;
 import com.til.newswebsite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,15 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findByUserName(username);
+        if (user == null){
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), new ArrayList<>());
+    }
+    public User save(User user) {
+        User newUser = new User();
+        newUser.setUserName(user.getUserName());
+        newUser.setPassword(user.getPassword());
+        return repository.save(newUser);
     }
 }

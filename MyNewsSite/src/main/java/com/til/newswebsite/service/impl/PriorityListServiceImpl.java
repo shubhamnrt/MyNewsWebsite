@@ -15,11 +15,17 @@ import com.til.newswebsite.repository.PriorityListRepository;
 import com.til.newswebsite.service.PriorityListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+=======
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.Comparator;
+>>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
 
 @Service
 public class PriorityListServiceImpl implements PriorityListService {
@@ -81,6 +87,18 @@ public class PriorityListServiceImpl implements PriorityListService {
         articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
 
         int limitInt = Integer.parseInt(limit);
+<<<<<<< HEAD
+=======
+        
+        if(limitInt==-1){
+            return articleListResponseDtoList;
+        }
+        else{
+            Stream<ArticleListResponseDto> stream = articleListResponseDtoList.stream();
+            return stream.limit(limitInt).collect(Collectors.toList());
+        }
+    }
+>>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
 
         if(limitInt==-1){
             return articleListResponseDtoList;

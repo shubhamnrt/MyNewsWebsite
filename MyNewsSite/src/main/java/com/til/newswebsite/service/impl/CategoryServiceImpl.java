@@ -12,10 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+=======
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.Comparator;
+>>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -65,9 +70,15 @@ public class CategoryServiceImpl implements CategoryService {
         });
 
         articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
+<<<<<<< HEAD
 
         int limitInt = Integer.parseInt(limit);
 
+=======
+        
+        int limitInt = Integer.parseInt(limit);
+        
+>>>>>>> 22bbefa1821f939cd69ea7611e56e10ed75bf1a1
         if(limitInt==-1){
             return articleListResponseDtoList;
         }
