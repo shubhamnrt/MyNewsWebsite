@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.Comparator;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -51,16 +53,26 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleListResponseDto> getArticles(String limit){
         List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
-         articleRepository.findAll().forEach(article -> {
+        articleRepository.findAll().forEach(article -> {
 
-             articleListResponseDtoList.add(new ArticleListResponseDto(
-                     article.getArticleId(),article.getTitle(),article.getDescription(),
-                     article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
-                     article.getImageUrl(),article.getCreatedAt()));
-         });
+            articleListResponseDtoList.add(new ArticleListResponseDto(
+                    article.getArticleId(),article.getTitle(),article.getDescription(),
+                    article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
+                    article.getImageUrl(),article.getCreatedAt()));
+        });
 
-         articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt));
-         return articleListResponseDtoList;
+         
+        articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
+        
+        int limitInt = Integer.parseInt(limit);
+        
+        if(limitInt==-1){
+            return articleListResponseDtoList;
+        }
+        else{
+            Stream<ArticleListResponseDto> stream = articleListResponseDtoList.stream();
+            return stream.limit(limitInt).collect(Collectors.toList());
+        }
     }
 
 

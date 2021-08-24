@@ -10,7 +10,8 @@ import java.util.HashMap;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(value ={InvalidRequestBodyException.class, AuthorAlreadyExistException.class,
+    @ExceptionHandler(value ={InvalidRequestBodyException.class, AuthorAlreadyExistException.class, 
+        ArticleAlreadyExistException.class,
             NotFoundException.class, UnauthorizedException.class, InvalidRequestException.class})
     public ResponseEntity<HashMap<String,String>> runTimeExceptionHandler(RuntimeException runtimeException){
 
