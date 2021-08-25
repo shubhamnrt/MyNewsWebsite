@@ -29,8 +29,10 @@ public class Author {
     @Column(unique = true,nullable = false)
     private String userName;
 
+    //@Column(nullable = false)
     private String fullName;
 
+    @Column(nullable = false)
     private String password;
 
     @CreationTimestamp
@@ -40,7 +42,7 @@ public class Author {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "author")
-    private List<Article> articleList = new ArrayList<Article>(0);
+    private List<Article> articleList = new ArrayList<>();
 
     public void addArticle(Article article){
         articleList.add(article);

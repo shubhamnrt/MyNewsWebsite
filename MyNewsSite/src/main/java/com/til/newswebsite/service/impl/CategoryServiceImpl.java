@@ -4,7 +4,9 @@ package com.til.newswebsite.service.impl;
 import com.til.newswebsite.dto.CategoryDto;
 import com.til.newswebsite.dto.ArticleListResponseDto;
 import com.til.newswebsite.dto.CategoryResponseDto;
+import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.entity.Category;
+import com.til.newswebsite.exception.InvalidRequestException;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.CategoryRepository;
 import com.til.newswebsite.service.CategoryService;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.Comparator;
@@ -49,8 +52,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     public CategoryResponseDto getCategoryById(Integer id)
     {
-        Category category = categoryRepository.findById(id).orElse(null);
-        return new CategoryResponseDto(category.getId(),category.getCategoryName(),category.getDescription());
+        Optional<Category> categoryOptional=categoryRepository.findById(id);
+        //Category category = categoryRepository.findById(id).orElse(null);
+        if(categoryOptional.isPresent()){
+            Category category = categoryOptional.get();
+            return new CategoryResponseDto(category.getId(),category.getCategoryName(),category.getDescription());
+        }
+        else{
+            throw new InvalidRequestException("Category don't exist with given id :- "+ id);
+        }
+
     }
 
     public List<ArticleListResponseDto> getAllArticlesFromCategory(String categoryName,String limit){

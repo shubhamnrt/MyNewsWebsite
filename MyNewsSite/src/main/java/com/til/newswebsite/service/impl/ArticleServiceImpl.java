@@ -1,14 +1,9 @@
 package com.til.newswebsite.service.impl;
 
-import com.til.newswebsite.dto.ArticleDto;
-import com.til.newswebsite.dto.ArticleListResponseDto;
-import com.til.newswebsite.dto.ArticleCreateResponseDto;
-import com.til.newswebsite.dto.ArticleResponseDto;
-import com.til.newswebsite.dto.ArticleContentUpdateDto;
-import com.til.newswebsite.dto.ArticleDescriptionUpdateDto;
-import com.til.newswebsite.dto.ArticleImageUrlUpdateDto;
-import com.til.newswebsite.dto.ArticleTitleUpdateDto;
+import com.til.newswebsite.dto.*;
 import com.til.newswebsite.entity.Article;
+import com.til.newswebsite.entity.Author;
+import com.til.newswebsite.entity.Category;
 import com.til.newswebsite.exception.ArticleAlreadyExistException;
 import com.til.newswebsite.exception.InvalidRequestBodyException;
 import com.til.newswebsite.exception.InvalidRequestException;
@@ -19,6 +14,7 @@ import com.til.newswebsite.repository.CategoryRepository;
 import com.til.newswebsite.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,8 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
     private AuthorRepository authorRepository;
 
     public ArticleCreateResponseDto createArticle(ArticleDto articleDto) {
-        if(articleDto.getTitle()==null){
-            throw new InvalidRequestBodyException("Article don't contain Article id");
+        if(articleDto==null){
+            throw new InvalidRequestBodyException("Request Body is empty");
+        }
+        else if(articleDto.getTitle()==null){
+            throw new InvalidRequestBodyException("Article don't contain Article Title");
         }
         else if(articleDto.getAuthorId()==null){
             throw new InvalidRequestBodyException("Article don't contain Author id");
@@ -53,17 +52,23 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         Article article = new Article();
-        try{
-            article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
+
+        Optional<Category> categoryOptional=categoryRepository.findById(articleDto.getCategoryId());
+        if(categoryOptional.isPresent()){
+            Category category = categoryOptional.get();
+            article.setCategory(category);
         }
-        catch(Exception e){
-            throw new InvalidRequestException("Category don't exist with given category id :- " + articleDto.getCategoryId() );
+        else{
+            throw new InvalidRequestException("Category don't exist with given id :- "+ articleDto.getCategoryId());
         }
-        try{
-            article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
+
+        Optional<Author> authorOptional = authorRepository.findById(articleDto.getAuthorId());
+        if(authorOptional.isPresent()){
+            Author author = authorOptional.get();
+            article.setAuthor(author);
         }
-        catch(Exception e){
-            throw new InvalidRequestException("Author don't exist with given Author id :- " + articleDto.getAuthorId());
+        else{
+            throw new InvalidRequestException("Author don't exist with given id :- "+articleDto.getAuthorId());
         }
 
         article.setContent(articleDto.getContent());
@@ -100,9 +105,6 @@ public class ArticleServiceImpl implements ArticleService {
          articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
 
         int limitInt = Integer.parseInt(limit);
-        if(limitInt>articleListResponseDtoList.size() || limitInt<-1) {
-            throw new InvalidRequestException("Limit is more than the number of articles in the list");
-        }
 
         if(limitInt==-1){
             return articleListResponseDtoList;
@@ -126,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
                     article.getImageUrl(),article.getCreatedAt());
         }
         else{
-            throw new InvalidRequestException("Article doesn't exist with given Id :- " + id);
+            throw new NotFoundException("Article doesn't exist with given Id :- " + id);
         }
     }
 
@@ -146,11 +148,12 @@ public class ArticleServiceImpl implements ArticleService {
     public String deleteArticle(int id) {
         try{
             articleRepository.deleteById(id);
+            return "Article removed !! " + id;
         }
-        catch (Exception e){
-            throw new InvalidRequestException("Article don't exist with given id" + id);
+        catch (EmptyResultDataAccessException emptyResultDataAccessException){
+            throw new InvalidRequestException("Article don't exist with given id :- " + id);
         }
-        return "Article removed !! " + id;
+
     }
 
 
@@ -172,7 +175,6 @@ public class ArticleServiceImpl implements ArticleService {
         else{
             throw new InvalidRequestException("Article is not found with given Id :- " + articleDescriptionUpdateDto.getArticleId());
         }
-
     }
 
 

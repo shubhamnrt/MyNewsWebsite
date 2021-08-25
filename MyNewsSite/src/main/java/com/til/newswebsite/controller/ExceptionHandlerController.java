@@ -16,4 +16,5 @@ public class ExceptionHandlerController {
 
         return ResponseEntity.badRequest().body(new HashMap<String, String>(){{put("message",runtimeException.getMessage());}});
     }
+
 }

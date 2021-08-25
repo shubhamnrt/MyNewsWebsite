@@ -1,6 +1,7 @@
 package com.til.newswebsite.entity;
 
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,15 +45,12 @@ public class Article {
     private String content;
 
     @ManyToOne
-    @JoinColumn
     private Author author;
 
-    //private String categoryName;
     @ManyToOne
-    @JoinColumn
     private Category category;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article",cascade = CascadeType.ALL)
     private List<PriorityArticles> priorityArticlesList = new ArrayList<>();
 
     public void addPriorityArticles(PriorityArticles priorityArticles){
