@@ -44,6 +44,7 @@ public class UserController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 

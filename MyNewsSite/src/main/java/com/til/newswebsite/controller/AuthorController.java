@@ -22,7 +22,7 @@ public class AuthorController {
     AuthorServiceImpl authorServiceImpl;
 
     @Autowired
-    BindingResultService bindingResultService;
+    private BindingResultService bindingResultService;
 
     @GetMapping("/demo")
     public String welcome() {
