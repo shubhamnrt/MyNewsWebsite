@@ -3,6 +3,7 @@ package com.til.newswebsite.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -12,5 +13,6 @@ public class ArticleContentUpdateDto {
     Integer articleId;
 
     @NotNull(message = "content is empty")
+    @Lob
     String content;
 }
