@@ -26,7 +26,7 @@ public class PriorityList {
 
     private String description;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @CreationTimestamp
