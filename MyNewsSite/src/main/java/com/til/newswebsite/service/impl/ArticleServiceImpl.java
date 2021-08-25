@@ -103,7 +103,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         else{
-            throw new NotFoundException("Article is not found with given Id :- " + id);
+            throw new NotFoundException("Article doesn't exist with given Id :- " + id);
         }
 
     }
@@ -112,6 +112,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleResponseDto getArticleByTitle(String title){
 
         Article article = articleRepository.findByTitle(title);
+        if(article==null) throw new NotFoundException("Article doesn't exist with given Title :- " + title);
 
         return new ArticleResponseDto(article.getArticleId(),article.getTitle(),
                 article.getDescription(),article.getContent(),
