@@ -1,2 +1,15 @@
-package com.til.newswebsite.dto;public class AuthorListResponseDto {
+package com.til.newswebsite.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthorListResponseDto {
+    Integer authorId;
+    String authorName;
 }

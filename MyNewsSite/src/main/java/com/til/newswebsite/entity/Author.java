@@ -29,7 +29,7 @@ public class Author {
     @Column(unique = true,nullable = false)
     private String userName;
 
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String fullName;
 
     @Column(nullable = false)
