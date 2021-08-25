@@ -11,6 +11,7 @@ import com.til.newswebsite.dto.ArticleTitleUpdateDto;
 import com.til.newswebsite.entity.Article;
 import com.til.newswebsite.exception.ArticleAlreadyExistException;
 import com.til.newswebsite.exception.InvalidRequestBodyException;
+import com.til.newswebsite.exception.InvalidRequestException;
 import com.til.newswebsite.exception.NotFoundException;
 import com.til.newswebsite.repository.ArticleRepository;
 import com.til.newswebsite.repository.AuthorRepository;
@@ -41,11 +42,30 @@ public class ArticleServiceImpl implements ArticleService {
     private AuthorRepository authorRepository;
 
     public ArticleCreateResponseDto createArticle(ArticleDto articleDto) {
+        if(articleDto.getTitle()==null){
+            throw new InvalidRequestBodyException("Article don't contain Article id");
+        }
+        else if(articleDto.getAuthorId()==null){
+            throw new InvalidRequestBodyException("Article don't contain Author id");
+        }
+        else if(articleDto.getCategoryId()==null){
+            throw new InvalidRequestBodyException("Article don't contain Category id");
+        }
 
         Article article = new Article();
+        try{
+            article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
+        }
+        catch(Exception e){
+            throw new InvalidRequestException("Category don't exist with given category id :- " + articleDto.getCategoryId() );
+        }
+        try{
+            article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
+        }
+        catch(Exception e){
+            throw new InvalidRequestException("Author don't exist with given Author id :- " + articleDto.getAuthorId());
+        }
 
-        article.setCategory(categoryRepository.getById(articleDto.getCategoryId()));
-        article.setAuthor(authorRepository.getById(articleDto.getAuthorId()));
         article.setContent(articleDto.getContent());
         article.setDescription(articleDto.getDescription());
         article.setImageUrl(articleDto.getImageUrl());
@@ -58,15 +78,15 @@ public class ArticleServiceImpl implements ArticleService {
         }
         catch (DataIntegrityViolationException dataIntegrityViolationException)
         {
-            throw new ArticleAlreadyExistException("Article Already Exist");
+            throw new ArticleAlreadyExistException("Article Already Exist with given id :- " + articleDto.getTitle());
         }
 
     }
 
 
     public List<ArticleListResponseDto> getArticles(String limit){
-        List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
+        List<ArticleListResponseDto> articleListResponseDtoList = new ArrayList<>();
 
          articleRepository.findAll().forEach(article -> {
 
@@ -76,9 +96,13 @@ public class ArticleServiceImpl implements ArticleService {
                      article.getImageUrl(),article.getCreatedAt()));
          });
 
+
          articleListResponseDtoList.sort(Comparator.comparing(ArticleListResponseDto::getCreatedAt).reversed());
 
         int limitInt = Integer.parseInt(limit);
+        if(limitInt>articleListResponseDtoList.size() || limitInt<-1) {
+            throw new InvalidRequestException("Limit is more than the number of articles in the list");
+        }
 
         if(limitInt==-1){
             return articleListResponseDtoList;
@@ -101,18 +125,16 @@ public class ArticleServiceImpl implements ArticleService {
                     article.getCategory().getCategoryName(),article.getAuthor().getFullName(),
                     article.getImageUrl(),article.getCreatedAt());
         }
-
         else{
-            throw new NotFoundException("Article doesn't exist with given Id :- " + id);
+            throw new InvalidRequestException("Article doesn't exist with given Id :- " + id);
         }
-
     }
 
 
     public ArticleResponseDto getArticleByTitle(String title){
 
         Article article = articleRepository.findByTitle(title);
-        if(article==null) throw new NotFoundException("Article doesn't exist with given Title :- " + title);
+        if(article==null) throw new NotFoundException("Article don't exist with given Title :- " + title);
 
         return new ArticleResponseDto(article.getArticleId(),article.getTitle(),
                 article.getDescription(),article.getContent(),
@@ -122,7 +144,12 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     public String deleteArticle(int id) {
-        articleRepository.deleteById(id);
+        try{
+            articleRepository.deleteById(id);
+        }
+        catch (Exception e){
+            throw new InvalidRequestException("Article don't exist with given id" + id);
+        }
         return "Article removed !! " + id;
     }
 
@@ -131,9 +158,11 @@ public class ArticleServiceImpl implements ArticleService {
         if(articleDescriptionUpdateDto==null){
             throw new InvalidRequestBodyException("Request Body is Empty");
         }
+        else if(articleDescriptionUpdateDto.getArticleId()==null){
+            throw new InvalidRequestBodyException("Request Body doesn't contain article Id");
+        }
 
         Optional<Article > articleOptional=articleRepository.findById(articleDescriptionUpdateDto.getArticleId());
-
         if(articleOptional.isPresent()){
             Article article = articleOptional.get();
             article.setDescription(articleDescriptionUpdateDto.getDescription());
@@ -141,33 +170,77 @@ public class ArticleServiceImpl implements ArticleService {
             return "Updated Description!";
         }
         else{
-            throw new NotFoundException("Article is not found with given Id :- " + articleDescriptionUpdateDto.getArticleId());
+            throw new InvalidRequestException("Article is not found with given Id :- " + articleDescriptionUpdateDto.getArticleId());
         }
 
     }
 
 
     public String updateArticleTitle(ArticleTitleUpdateDto articleTitleUpdateDto){
-        Article article = articleRepository.getById(articleTitleUpdateDto.getArticleId());
-        article.setTitle(articleTitleUpdateDto.getTitle());
-        articleRepository.save(article);
-        return "Updated Title";
+        if(articleTitleUpdateDto==null){
+            throw new InvalidRequestBodyException("Request Body is Empty");
+        }
+        else if(articleTitleUpdateDto.getArticleId()==null){
+            throw new InvalidRequestBodyException("Request Body doesn't contain article Id");
+        }
+        else if(articleTitleUpdateDto.getTitle()==null){
+            throw new InvalidRequestBodyException("Request Body doesn't contain article Title");
+        }
+
+        Optional<Article > articleOptional=articleRepository.findById(articleTitleUpdateDto.getArticleId());
+        if(articleOptional.isPresent()){
+            Article article = articleOptional.get();
+            article.setTitle(articleTitleUpdateDto.getTitle());
+            articleRepository.save(article);
+            return "Updated Title!";
+        }
+        else{
+            throw new InvalidRequestException("Article is not found with given Id :- " + articleTitleUpdateDto.getArticleId());
+        }
     }
 
 
     public String updateArticleContent(ArticleContentUpdateDto articleContentUpdateDto){
-        Article article = articleRepository.getById(articleContentUpdateDto.getArticleId());
-        article.setContent(articleContentUpdateDto.getContent());
-        articleRepository.save(article);
-        return "Updated Content";
+
+        if(articleContentUpdateDto==null){
+            throw new InvalidRequestBodyException("Request Body is Empty");
+        }
+        else if(articleContentUpdateDto.getArticleId()==null){
+            throw new InvalidRequestException("Request Body doesn't contain Article id");
+        }
+
+        Optional<Article > articleOptional=articleRepository.findById(articleContentUpdateDto.getArticleId());
+        if(articleOptional.isPresent()){
+            Article article = articleOptional.get();
+            article.setTitle(articleContentUpdateDto.getContent());
+            articleRepository.save(article);
+            return "Updated Title!";
+        }
+        else{
+            throw new InvalidRequestException("Article is not found with given Id :- " + articleContentUpdateDto.getArticleId());
+        }
     }
 
 
     public String updateArticleImageURl(ArticleImageUrlUpdateDto articleImageUrlUpdateDto){
-        Article article = articleRepository.getById(articleImageUrlUpdateDto.getArticleId());
-        article.setImageUrl(articleImageUrlUpdateDto.getImageUrl());
-        articleRepository.save(article);
-        return "Updated ImageUrl";
+        if(articleImageUrlUpdateDto == null){
+            throw new InvalidRequestBodyException("Request Body is Empty");
+        }
+        else if(articleImageUrlUpdateDto.getArticleId()==null){
+            throw new InvalidRequestBodyException("Request Body don't contain Article id");
+        }
+
+        Optional<Article > articleOptional=articleRepository.findById(articleImageUrlUpdateDto.getArticleId());
+
+        if(articleOptional.isPresent()){
+            Article article = articleOptional.get();
+            article.setImageUrl(articleImageUrlUpdateDto.getImageUrl());
+            articleRepository.save(article);
+            return "Updated Image Url!";
+        }
+        else{
+            throw new InvalidRequestException("Article is not found with given Id :- " + articleImageUrlUpdateDto.getArticleId());
+        }
     }
 
 }
