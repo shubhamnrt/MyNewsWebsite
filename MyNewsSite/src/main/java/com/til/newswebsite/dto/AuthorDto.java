@@ -24,7 +24,7 @@ public class AuthorDto {
     @NotNull(message = "Author name can't be null")
     private String fullName;
 
-    @NotNull(message = "password can't be null")
+    @NotNull(message = "Password can't be null")
     private String password;
 
 }
